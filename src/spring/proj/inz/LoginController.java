@@ -1,15 +1,13 @@
-package spring.proj.inz;
+package com.tognyp.springsecurity.demo.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LoginController {
 
-	public boolean checkUser() {
-		return false;
-	}
-	
-	public String showForm() {
-		return null;
+	@GetMapping("/showMyLoginPage")
+	public String showMyLoginPage() {
+		return "login";
 	}
 }
