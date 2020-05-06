@@ -24,7 +24,7 @@ public class QuestionnaireServiceImpl implements QuesionnaireService {
 
 	@Override
 	@Transactional
-	public Questionnaire findQuestionnaireById(int id) {
+	public Questionnaire findQuestionnaireById(Long id) {
 		return questionnaireDao.findQuestionnaireById(id);
 	}
 

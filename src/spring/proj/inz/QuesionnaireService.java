@@ -8,7 +8,7 @@ public interface QuesionnaireService {
 	
 	List<Questionnaire> getQuestionnaires();
 
-	Questionnaire findQuestionnaireById(int id);
+	Questionnaire findQuestionnaireById(Long l);
 	
 	void save(Questionnaire questionnaire);
 

@@ -1,5 +1,7 @@
 package com.tognyp.springsecurity.demo.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,12 @@ public class QuestionServiceImpl implements QuestionService {
 	public void save(Question theQuestion, Long questionnaireId) {
 		questionDao.save(theQuestion, questionnaireId);
 
+	}
+
+	@Override
+	@Transactional
+	public List<Question> getQuestions(int id) {
+		return questionDao.getQuestions(id);
 	}
 
 }

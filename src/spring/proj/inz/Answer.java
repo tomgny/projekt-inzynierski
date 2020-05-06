@@ -31,17 +31,22 @@ public class Answer {
 		
 	}
 	
+	public Answer(String answer, Question question) {
+		this.answer = answer;
+		this.question = question;
+	}
+	
+	public Answer(String answer) {
+		this.answer = answer;
+	}
+
+	
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Answer(String answer, Question question) {
-		this.answer = answer;
-		this.question = question;
 	}
 
 	public String getAnswer() {

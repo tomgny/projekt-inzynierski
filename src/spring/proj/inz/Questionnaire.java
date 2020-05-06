@@ -1,6 +1,6 @@
 package com.tognyp.springsecurity.demo.entity;
 
-import java.util.Collection;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,8 +24,8 @@ public class Questionnaire {
 	@Column(name="title")
 	private String title;
 	
-	@OneToMany(mappedBy="questionnaire", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	private Collection<Question> questions;
+	@OneToMany(mappedBy="questionnaire", fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval = true)
+	private Set<Question> questions;
 	
 	
 	public Questionnaire() {
@@ -37,16 +37,16 @@ public class Questionnaire {
 	}
 	
 
-	public Questionnaire(String title, Collection<Question> questions) {
+	public Questionnaire(String title, Set<Question> questions) {
 		this.title = title;
 		this.questions = questions;
 	}
 
-	public Collection<Question> getQuestions() {
+	public Set<Question> getQuestions() {
 		return questions;
 	}
 
-	public void setQuestions(Collection<Question> questions) {
+	public void setQuestions(Set<Question> questions) {
 		this.questions = questions;
 	}
 
