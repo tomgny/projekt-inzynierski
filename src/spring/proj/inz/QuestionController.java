@@ -1,5 +1,7 @@
 package com.tognyp.springsecurity.demo.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +27,12 @@ public class QuestionController {
 	public String saveQuestion(HttpServletRequest request, @ModelAttribute("question") Question theQuestion) {
 
 		String temp = request.getParameter("questionnaire");
+		System.out.println("title: " + theQuestion.getTitle());
+		System.out.println("id: " + theQuestion.getId());
+		System.out.println("questionnaireid: " + theQuestion.getQuestionnaire().getId());
 		questionService.save(theQuestion, Long.parseLong(temp));
 		
-		return "redirect:/questionnaire/show-questionnaire";
+		return "redirect:/questionnaires/show-questionnaire";
 	}
 	
 	@GetMapping("/addQuestion")
@@ -37,5 +42,15 @@ public class QuestionController {
 		theModel.addAttribute("question", tempQuestion);
 		
 		return "add-question";
+	}
+	
+	@GetMapping("/showQuestions")
+	public String showQuestions(HttpServletRequest request, Model theModel) {
+		
+		List<Question> questionList = questionService.getQuestions(Integer.parseInt(request.getParameter("questionnaireId")));
+		
+		theModel.addAttribute("questions", questionList);
+		
+		return "show-quest";
 	}
 }

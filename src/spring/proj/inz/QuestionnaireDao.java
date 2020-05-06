@@ -8,7 +8,7 @@ public interface QuestionnaireDao {
 	
 	List<Questionnaire> getQuestionnaires();
 
-	Questionnaire findQuestionnaireById(int id);
+	Questionnaire findQuestionnaireById(Long id);
 	
 	void save(Questionnaire questionnaire);
 }

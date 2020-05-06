@@ -18,7 +18,7 @@ public class QuesionnaireDaoImpl implements QuestionnaireDao {
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public Questionnaire findQuestionnaireById(int id) {
+	public Questionnaire findQuestionnaireById(Long id) {
 		
 		Session currentSession = sessionFactory.getCurrentSession();
 		

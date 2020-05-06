@@ -1,7 +1,10 @@
 package com.tognyp.springsecurity.demo.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,12 +20,31 @@ public class QuestionDaoImpl implements QuestionDao {
 	@Override
 	public void save(Question theQuestion, Long questionnaireId) {
 		
-		Session session = sessionFactory.getCurrentSession();
-		Questionnaire tempQuestionnaire = session.get(Questionnaire.class, questionnaireId);
+		Session currentSession = sessionFactory.getCurrentSession();
+		Questionnaire tempQuestionnaire = currentSession.get(Questionnaire.class, questionnaireId);
 		theQuestion.setQuestionnaire(tempQuestionnaire);
 		
-		session.saveOrUpdate(theQuestion);
+		currentSession.saveOrUpdate(theQuestion);
 
+	}
+
+	@Override
+	public List<Question> getQuestions(int theId) {
+
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		/*Query<Question> theQuery = currentSession.createQuery(
+				"select Question.title from Question question"
+				+ " join question.questionnaire questionnaire"
+				+ " where questionnaide.id =: theId ", Question.class);
+		*/
+		Query<Question> theQuery = currentSession.createQuery("from Question", Question.class);
+		
+		//theQuery.setParameter("theId", theId);
+		
+		List<Question> questions = theQuery.getResultList();
+		
+		return questions;
 	}
 
 }

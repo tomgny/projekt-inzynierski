@@ -1,6 +1,11 @@
 package com.tognyp.springsecurity.demo.controller;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.tognyp.springsecurity.demo.entity.Question;
 import com.tognyp.springsecurity.demo.entity.Questionnaire;
 import com.tognyp.springsecurity.demo.service.QuesionnaireService;
 
@@ -44,7 +50,26 @@ public class QuestionnaireController {
 		
 		questionnaireService.save(theQuestionnaire);
 		
-		return "redirect:/questionnaire/show-questionnaire";
+		return "redirect:/questionnaires/show-questionnaire";
+	}
+	
+	@GetMapping("/doAnswer")
+	public String doAnswer(Model theModel, HttpServletRequest request) {
+		
+		Questionnaire theQuestionnaire = questionnaireService.findQuestionnaireById(
+										 Long.parseLong(request.getParameter("questionnaireId")));
+		
+		Set<Question> setQuestions = new HashSet<>();
+		setQuestions = theQuestionnaire.getQuestions();
+		
+		for(Question q : setQuestions) {
+			System.out.println("title: " + q.getTitle() + " id: " + q.getId() + " answers: " + q.getAnswers().toString());
+		}
+		
+		
+		theModel.addAttribute("questions", setQuestions);
+		
+		return "do-answer";
 	}
 	
 }
