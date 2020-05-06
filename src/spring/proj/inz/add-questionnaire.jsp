@@ -43,7 +43,7 @@
 		 <div style="clear; both;"></div>
 		 
 		 <p>
-		 	<a href="${pageContext.request.contextPath}/questionnaire/show-questionnaire">Powrót do listy</a>
+		 	<a href="${pageContext.request.contextPath}/questionnaires/show-questionnaire">Powrót do listy</a>
 		 </p>
 		 
 	</div>
