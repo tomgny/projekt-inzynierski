@@ -20,10 +20,10 @@ public class Answer {
 	@Column(name="id")
 	private Long id;
 	
-	@Column(name="answer")
-	private String answer;
+	@Column(name="title")
+	private String title;
 
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="question_id")
 	private Question question;
 	
@@ -31,16 +31,23 @@ public class Answer {
 		
 	}
 	
-	public Answer(String answer, Question question) {
-		this.answer = answer;
+	public Answer(String title, Question question) {
+		this.title = title;
 		this.question = question;
 	}
 	
 	public Answer(String answer) {
-		this.answer = answer;
+		this.title = answer;
+	}
+	
+	public String getTitle() {
+		return title;
 	}
 
-	
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -49,20 +56,17 @@ public class Answer {
 		this.id = id;
 	}
 
-	public String getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
-	}
-
 	public Question getQuestion() {
 		return question;
 	}
 
 	public void setQuestion(Question question) {
 		this.question = question;
+	}
+
+	@Override
+	public String toString() {
+		return getTitle();
 	}
 	
 	

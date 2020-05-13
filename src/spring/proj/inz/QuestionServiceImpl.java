@@ -29,4 +29,10 @@ public class QuestionServiceImpl implements QuestionService {
 		return questionDao.getQuestions(id);
 	}
 
+	@Override
+	@Transactional
+	public Question getQuestionById(String id) {
+		return questionDao.getQuestionById(id);
+	}
+
 }

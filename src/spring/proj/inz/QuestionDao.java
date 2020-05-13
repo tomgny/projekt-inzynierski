@@ -10,4 +10,6 @@ public interface QuestionDao {
 
 	public List<Question> getQuestions(int id);
 
+	public Question getQuestionById(String id);
+
 }

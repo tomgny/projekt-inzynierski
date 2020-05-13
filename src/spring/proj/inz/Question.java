@@ -26,6 +26,9 @@ public class Question {
 	@Column(name="quest")
 	private String title;
 	
+	@Column(name="type")
+	private String type;
+	
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="questionnaire_id")
 	private Questionnaire questionnaire;
@@ -37,15 +40,25 @@ public class Question {
 		
 	}
 	
-	public Question(String title, Questionnaire questionnaire, Set<Answer> answers) {
+	public Question(String title, Questionnaire questionnaire, String type, Set<Answer> answers) {
 		this.title = title;
 		this.questionnaire = questionnaire;
 		this.answers = answers;
+		this.type = type;
 	}
 	
-	public Question(String title, Questionnaire questionnaire) {
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Question(String title, Questionnaire questionnaire, String type) {
 		this.title = title;
 		this.questionnaire = questionnaire;
+		this.type = type;
 	}
 
 	public Long getId() {
