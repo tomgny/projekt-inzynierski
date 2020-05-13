@@ -35,7 +35,7 @@
 					<c:url var="showQuestions" value="/question/showQuestions">
 						<c:param name="questionnaireId" value="${tempQuest.id}"/>
 					</c:url>
-					<c:url var="doAnswer" value="/questionnaires/doAnswer">
+					<c:url var="doResponse" value="/response/doResponse">
 						<c:param name="questionnaireId" value="${tempQuest.id}"/>
 					</c:url>
 					<!-- construct an "update" link with customer id -->
@@ -44,7 +44,7 @@
 						<td>${tempQuest.title}</td>		
 						<td><a href="${addQuestion}">Dodaj pytanie</a></td>	
 						<td><a href="${showQuestions}">Dodaj odpowiedz</a></td>	
-						<td><a href="${doAnswer}">Odpowiedz na ankiete</a></td>	
+						<td><a href="${doResponse}">Odpowiedz na ankiete</a></td>	
 					</tr>
 					
 				</c:forEach>
