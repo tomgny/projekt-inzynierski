@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,11 +26,21 @@ public class AsnwerController {
 	
 	@PostMapping("/saveAnswer/{questionnaireId}")
 	//public String saveAnswer(HttpServletRequest request, @ModelAttribute("answer")Answer theAnswer) {
-	public String saveAnswer(RedirectAttributes redirectAttributes, HttpServletRequest request, @PathVariable("questionnaireId") String questionnaireId,
-							 @ModelAttribute("answer") Answer theAnswer) {
-
-		String temp = request.getParameter("question");
-		answerService.save(theAnswer, Long.parseLong(temp));
+	//public String saveAnswer(RedirectAttributes redirectAttributes, HttpServletRequest request, @PathVariable("questionnaireId") String questionnaireId,
+	//						 @ModelAttribute("answer") Answer theAnswer) {
+	public String saveAnswer(HttpServletRequest request, @PathVariable("questionnaireId") String questionnaireId, 
+							 @ModelAttribute("answer") Answer theAnswer, BindingResult result, RedirectAttributes redirectAttributes) {
+		if(result.hasErrors()) {
+			result.getAllErrors();
+		}
+		System.out.println("*******request answer********** " + theAnswer.getId());
+		System.out.println("*******request********** " + request.getParameter("title"));
+		System.out.println("*******question id********** " + request.getParameter("question"));
+		System.out.println("*******pathVariable********** =  " + questionnaireId);
+		
+		Long questionId = Long.parseLong(request.getParameter("question"));
+		
+		answerService.save(theAnswer, questionId);
 		
 		redirectAttributes.addAttribute("questionnaireId", questionnaireId);
 		

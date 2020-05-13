@@ -1,6 +1,5 @@
 package com.tognyp.springsecurity.demo.controller;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,7 +51,7 @@ public class QuestionnaireController {
 		
 		return "redirect:/questionnaires/show-questionnaire";
 	}
-	
+	/*
 	@GetMapping("/doAnswer")
 	public String doAnswer(Model theModel, HttpServletRequest request) {
 		
@@ -71,5 +70,5 @@ public class QuestionnaireController {
 		
 		return "do-answer";
 	}
-	
+	*/
 }

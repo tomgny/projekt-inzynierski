@@ -1,6 +1,6 @@
 package com.tognyp.springsecurity.demo.controller;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tognyp.springsecurity.demo.entity.Question;
+import com.tognyp.springsecurity.demo.entity.Questionnaire;
+import com.tognyp.springsecurity.demo.service.QuesionnaireService;
 import com.tognyp.springsecurity.demo.service.QuestionService;
 
 @Controller
@@ -21,6 +23,9 @@ public class QuestionController {
 	
 	@Autowired
 	private QuestionService questionService;
+	
+	@Autowired
+	private QuesionnaireService questionnaireService;
 
 	@PostMapping("/saveQuestion")
 	//public String saveQuestion(@RequestParam("questionnaireId") Long questionnaireId, @ModelAttribute("question") Question theQuestion) {
@@ -29,6 +34,7 @@ public class QuestionController {
 		String temp = request.getParameter("questionnaire");
 		System.out.println("title: " + theQuestion.getTitle());
 		System.out.println("id: " + theQuestion.getId());
+		System.out.println("type: " + theQuestion.getType());
 		System.out.println("questionnaireid: " + theQuestion.getQuestionnaire().getId());
 		questionService.save(theQuestion, Long.parseLong(temp));
 		
@@ -47,8 +53,10 @@ public class QuestionController {
 	@GetMapping("/showQuestions")
 	public String showQuestions(HttpServletRequest request, Model theModel) {
 		
-		List<Question> questionList = questionService.getQuestions(Integer.parseInt(request.getParameter("questionnaireId")));
-		
+		Questionnaire tempQuestionnaire = new Questionnaire();
+		tempQuestionnaire = questionnaireService.findQuestionnaireById(Long.parseLong(request.getParameter("questionnaireId")));
+		Set<Question> questionList = tempQuestionnaire.getQuestions();
+
 		theModel.addAttribute("questions", questionList);
 		
 		return "show-quest";
