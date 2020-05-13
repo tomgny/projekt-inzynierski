@@ -31,7 +31,7 @@
 				<tbody>
 					<tr>
 						<td><label>Treść odpowiedzi:</label></td>
-						<td><form:input path="answer"></form:input></td>
+						<td><form:input path="title"></form:input></td>
 					</tr>
 					
 					<tr>

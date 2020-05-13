@@ -34,6 +34,14 @@
 					</tr>
 					
 					<tr>
+						<td><label>Typ pytania:</label></td>
+						<td><form:radiobutton path="type" value="1" label="Jedna odpowiedz"></form:radiobutton></td>
+						<td><form:radiobutton path="type" value="2" label="Wiele odpowiedzi"></form:radiobutton></td>
+						<td><form:radiobutton path="type" value="3" label="Lista odpowiedzi"></form:radiobutton></td>
+						<td><form:radiobutton path="type" value="4" label="Otwarta odpowiedz"></form:radiobutton></td>
+					</tr>
+					
+					<tr>
 						<td><label></label></td>
 						<td><input type="submit" value="Zapisz" class="save"/></td>
 					</tr>
