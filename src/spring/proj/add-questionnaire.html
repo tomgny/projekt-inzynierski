@@ -1,0 +1,50 @@
+<!-- <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>  -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Adding questionnaires</title>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="main-content">
+		<div class="header">
+			<div class="title">
+				<a href="home.html"><h1>Adding questionnaires</h1></a>
+			</div>
+			<div class="menu">
+				<a href="home.html">Home</a>
+				<a href="add.html">Add</a>
+				<a href="panel.html">Panel</a>
+				<form action="" method="POST">
+					<input type="submit" value="Wyloguj" />
+				</form>
+			</div>
+		</div>
+		<div class="page-content">
+			<div class="add-options">
+				<a href="add-answer.html">Adding answers</a>
+				<a class="active" href="add-questionnaire.html">Adding questionnaires</a>
+				<a href="add-question.html">Adding questions</a>
+			</div>
+			<div class="data-title">
+				<h2> Add questionnaire </h2>
+			</div>
+			<div class="data">
+				<form action="" modelAttribute="questionnaire" method="POST">
+					<div class="form-row">
+						<label>Content of the questionnaire:</label>
+						<div class="box questionnaire">
+							<textarea name="questionnaire" id="questionnaire" cols="50" rows="10"></textarea>
+							<input type="submit" value="Save" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>	
+	</div> 
+</body>
+</html>

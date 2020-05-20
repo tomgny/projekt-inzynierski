@@ -1,0 +1,72 @@
+<!-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%> -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>List of questionnaires</title>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="main-content">
+		<div class="header">
+			<div class="title">
+				<a href="home.html"><h1>List of questionnaires</h1></a>
+			</div>
+			<div class="menu">
+				<a href="home.html">Home</a>
+				<a href="add.html">Add</a>
+				<a href="panel.html">Panel</a>
+				<form action="" method="POST">
+					<input type="submit" value="Wyloguj" />
+				</form>
+			</div>
+		</div>
+		<div class="page-content">
+			<div class="add-options">
+				<a class="active" href="show-questionnaire.html">Show list of questionnaires</a>
+				<a href="show-quest.html">Show list of questions</a>
+			</div>
+			<div class="data-title">
+				<h2> List </h2>
+			</div>
+			<div class="data">
+				<table>
+					<tr>
+						<th>Id</th>
+						<th>Title</th>
+					</tr>
+					<c:forEach var="tempQuest" items="${questionnaires}">
+				
+						<c:url var="addQuestion" value="/question/addQuestion">
+							<c:param name="questionnaireId" value="${tempQuest.id}"/>
+						</c:url>
+						
+						<c:url var="showQuestions" value="/question/showQuestions">
+							<c:param name="questionnaireId" value="${tempQuest.id}"/>
+						</c:url>
+						<c:url var="doResponse" value="/response/doResponse">
+							<c:param name="questionnaireId" value="${tempQuest.id}"/>
+						</c:url>
+						<c:url var="getResponses" value="/response/getResponses">
+							<c:param name="questionnaireId" value="${tempQuest.id}"/>
+						</c:url>
+						<!-- construct an "update" link with customer id -->
+						<tr>
+							<td>${tempQuest.id}</td>
+							<td>${tempQuest.title}</td>		
+							<td><a href="${addQuestion}">Dodaj pytanie</a></td>	
+							<td><a href="${showQuestions}">Dodaj odpowiedz</a></td>	
+							<td><a href="${doResponse}">Odpowiedz na ankiete</a></td>	
+							<td><a href="${getResponses}">Zobacz swoje odpowiedzi</a></td>	
+						</tr>
+						
+					</c:forEach>
+				</table>
+			</div>
+		</div>	
+	</div>
+</body>
+</html>
