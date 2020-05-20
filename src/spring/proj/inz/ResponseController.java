@@ -1,12 +1,16 @@
 package com.tognyp.springsecurity.demo.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.support.Repositories;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -14,9 +18,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tognyp.springsecurity.demo.entity.Answer;
 import com.tognyp.springsecurity.demo.entity.Question;
@@ -27,6 +33,7 @@ import com.tognyp.springsecurity.demo.service.AnswerService;
 import com.tognyp.springsecurity.demo.service.QuesionnaireService;
 import com.tognyp.springsecurity.demo.service.QuestionService;
 import com.tognyp.springsecurity.demo.service.ResponseService;
+import com.tognyp.springsecurity.demo.user.ResponsesViewModel;
 
 @Controller
 @RequestMapping("/response")
@@ -50,19 +57,31 @@ public class ResponseController {
 	@GetMapping("/doResponse")
 	public String doResponse(Model theModel, HttpServletRequest request) {
 		
-		Response theResponse = new Response();
+		
+		ResponsesViewModel responses = new ResponsesViewModel();
 		
 		Questionnaire theQuestionnaire = new Questionnaire();
 		theQuestionnaire = questionnaireService.findQuestionnaireById(Long.parseLong(request.getParameter("questionnaireId")));
 		
 		Set<Question> theQuestions = theQuestionnaire.getQuestions();
-		//Set<Response> theResponses = new HashSet<>();
-		//for(int i = 1; i < theQuestions.size()+1; i++) {
-		//	theModel.addAttribute("response" + i, theResponse);
-		//}
-		
-		theModel.addAttribute("response", theResponse);
-		theModel.addAttribute("questions", theQuestions);
+		List<Question> questions = new ArrayList<>();
+		int tmpCounter = 0;
+		for(Question q : theQuestions) {
+			questions.add(q);
+			System.out.println("add question counter: " + tmpCounter + " question id: " + q.getId());
+			tmpCounter++;
+		}
+		List<Response> theResponses = new ArrayList<>();
+		Long tmp1 = (long) 10;
+		Long tmp2 = (long) 20;
+		for(int i = 0; i < theQuestions.size(); i++) {
+			theResponses.add(new Response("test", tmp1, tmp2, "loltekst"));
+		}
+		responses.setResponses(theResponses);
+		System.out.println("responses size: " + responses.getResponses().size());
+
+		theModel.addAttribute("responses", responses);
+		theModel.addAttribute("questions", questions);
 		
 		/*
 		Questionnaire theQuestionnaire = new Questionnaire();
@@ -82,7 +101,9 @@ public class ResponseController {
 	}
 	
 	@PostMapping("/saveResponse")
-	public String saveResponse(HttpServletRequest request, Model theModel, Authentication authentication, @ModelAttribute("response") Response theResponse, BindingResult result) {
+	public String saveResponse(HttpServletRequest request, Model theModel, Authentication authentication,
+							   @ModelAttribute("responses") ResponsesViewModel theResponses, BindingResult result) {
+		
 		if(result.hasErrors()) {
 			result.getAllErrors();
 		}
@@ -90,18 +111,61 @@ public class ResponseController {
 		
 		HttpSession session = request.getSession();
 		User username = (User)session.getAttribute("user");
-		//theResponse.setQuestionnaireId(Long.parseLong(request.getParameter("questionnaireId")));
-		//theResponse.setQuestionId(Long.parseLong(request.getParameter("questionId")));
-		theResponse.setUser(passwordEncoder.encode(username.getUserName()));
-		System.out.println("response id: " + theResponse.getId());
-		System.out.println("response text: " + theResponse.getText());
-		System.out.println("response id question: " + theResponse.getQuestionId());
-		System.out.println("response id questionnaire: " + theResponse.getQuestionnaireId());
-		System.out.println("response user: " + theResponse.getUser());
-		System.out.println("request param questionId" + request.getParameter("questionId"));
+
+		List<Response> responses = theResponses.getResponses();
+		System.out.println(theResponses.getResponses());
+		String passToSave = username.getUserName() + request.getParameter("passwd");
+		System.out.println("passToSave: " + passToSave);
+		for(Response r : responses) {
+			//r.setUser(passwordEncoder.encode(username.getUserName()));
+			System.out.println("response id: " + r.getId());
+			System.out.println("response text: " + r.getText());
+			System.out.println("response id question: " + r.getQuestionId());
+			System.out.println("response id questionnaire: " + r.getQuestionnaireId());
+			System.out.println("response user: " + r.getUser());
+		}
+		
+		for(Response r : theResponses.getResponses()) {
+			r.setUser(passwordEncoder.encode(passToSave));
+			String verification = passToSave + r.getQuestionnaireId() + r.getQuestionId() + r.getText();
+			r.setVerification(passwordEncoder.encode(verification));
+			responseService.save(r);
+		}
+		
+//		theResponse.setUser(passwordEncoder.encode(username.getUserName()));
+
 		
 		//responseService.save(theResponse);
 		
 		return "redirect:/questionnaires/show-questionnaire";
+	}
+	
+	@GetMapping("/getResponses")
+	public String getResponses() {
+		
+		
+		return "get-responses";
+	}
+	
+	@PostMapping("/showResponses")
+	public String showResponses(Model theModel, HttpServletRequest request, @RequestParam(name="passwd") String passwd,
+								@RequestParam(name="questionnaireId") String questionnaireId) {
+		
+		
+		HttpSession session = request.getSession();
+		User username = (User)session.getAttribute("user");
+		
+		String nameToSearch = username.getUserName() + passwd;
+		
+		System.out.println("nameToSearch: " + nameToSearch);
+		System.out.println("quesionnaireId: " + questionnaireId);
+		
+		List<Response> theResponses = responseService.findByUsername(nameToSearch, questionnaireId);
+		List<Question> theQuestions = questionService.getQuestions(Integer.parseInt(questionnaireId));
+		
+		theModel.addAttribute("responses", theResponses);
+		theModel.addAttribute("questions", theQuestions);
+		
+		return "show-responses";
 	}
 }

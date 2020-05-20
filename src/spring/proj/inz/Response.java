@@ -27,11 +27,23 @@ public class Response {
 	
 	@Column(name="text")
 	private String text;
+	
+	@Column(name="verifitaction")
+	private String verification;
 
 	public Response() {
 		
 	}
 	
+	public Response(Long id, String user, Long questionnaireId, Long questionId, String text, String verification) {
+		this.id = id;
+		this.user = user;
+		this.questionnaireId = questionnaireId;
+		this.questionId = questionId;
+		this.text = text;
+		this.verification = verification;
+	}
+
 	public Response(String user, Long questionnaireId, Long questionId, String text) {
 		this.user = user;
 		this.questionnaireId = questionnaireId;
@@ -83,6 +95,14 @@ public class Response {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public String getVerification() {
+		return verification;
+	}
+
+	public void setVerification(String verification) {
+		this.verification = verification;
 	}
 	
 }
