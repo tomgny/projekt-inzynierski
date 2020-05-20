@@ -1,5 +1,7 @@
 package com.tognyp.springsecurity.demo.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,13 @@ public class ResponseServiceImpl implements ResponseService {
 	public void save(Response response) {
 		responseDao.save(response);
 
+	}
+
+	@Override
+	@Transactional
+	public List<Response> findByUsername(String username, String questionnaireId) {
+		return responseDao.findByUsername(username, questionnaireId);
+		
 	}
 
 }

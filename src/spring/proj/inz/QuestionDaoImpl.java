@@ -38,7 +38,8 @@ public class QuestionDaoImpl implements QuestionDao {
 				+ " join question.questionnaire questionnaire"
 				+ " where questionnaide.id =: theId ", Question.class);
 		*/
-		Query<Question> theQuery = currentSession.createQuery("from Question", Question.class);
+		Query<Question> theQuery = currentSession.createQuery("from Question where questionnaire_id=:theId", Question.class);
+		theQuery.setParameter("theId", theId);
 		
 		//theQuery.setParameter("theId", theId);
 		
