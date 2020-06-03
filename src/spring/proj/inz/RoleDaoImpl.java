@@ -1,5 +1,7 @@
 package com.tognyp.springsecurity.demo.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -7,6 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tognyp.springsecurity.demo.entity.Role;
+
+/**
+* DAO implementation of Role entity use to store data in database
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
 
 @Repository
 public class RoleDaoImpl implements RoleDao {
@@ -34,5 +45,17 @@ public class RoleDaoImpl implements RoleDao {
 		}
 		
 		return theRole;
+	}
+
+	@Override
+	public List<Role> findAllRoles() {
+		
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		Query<Role> theQuery = currentSession.createQuery("from Role", Role.class);
+		
+		List<Role> theRoles = theQuery.getResultList();
+		
+		return theRoles;
 	}
 }

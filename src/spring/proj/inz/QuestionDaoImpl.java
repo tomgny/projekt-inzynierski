@@ -11,6 +11,15 @@ import org.springframework.stereotype.Repository;
 import com.tognyp.springsecurity.demo.entity.Question;
 import com.tognyp.springsecurity.demo.entity.Questionnaire;
 
+/**
+* DAO implementation of Question entity use to store data in database
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Repository
 public class QuestionDaoImpl implements QuestionDao {
 	

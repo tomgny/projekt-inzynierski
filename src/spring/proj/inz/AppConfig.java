@@ -22,6 +22,15 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+/**
+* Main app config
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
@@ -36,6 +45,14 @@ public class AppConfig {
 	// set up a logger for diagnostics
 	private Logger logger = Logger.getLogger(getClass().getName());
 	
+	/**
+	* Configuration view resolver
+	* 
+	*
+	* 
+	* @version 1.0
+	* @since   2020-06-03
+	*/
 	
 	@Bean
 	public ViewResolver viewResolver() {
@@ -46,6 +63,15 @@ public class AppConfig {
 		
 		return viewResolver;
 	}
+	
+	/**
+	* Configuration JDBC connection data source
+	* 
+	*
+	* 
+	* @version 1.0
+	* @since   2020-06-03
+	*/
 	
 	@Bean
 	public DataSource securityDataSource() {
@@ -86,8 +112,14 @@ public class AppConfig {
 		return securityDataSource;
 	}
 	
-	// need a helper method 
-	// read environment property and convert to int
+	/**
+	* Read environment property and convert to int
+	* 
+	*
+	* 
+	* @version 1.0
+	* @since   2020-06-03
+	*/
 	
 	private int getIntProperty(String propName) {
 		
@@ -99,6 +131,15 @@ public class AppConfig {
 		return intPropVal;
 	}
 	
+	/**
+	* Configuration hibernate properties
+	* 
+	*
+	* 
+	* @version 1.0
+	* @since   2020-06-03
+	*/
+	
 	private Properties getHibernateProperties() {
 
 		// set hibernate properties
@@ -109,6 +150,15 @@ public class AppConfig {
 	
 		return props;				
 	}
+	
+	/**
+	* Configuration session factory
+	* 
+	*
+	* 
+	* @version 1.0
+	* @since   2020-06-03
+	*/
 
 	
 	@Bean
@@ -124,6 +174,15 @@ public class AppConfig {
 		
 		return sessionFactory;
 	}
+	
+	/**
+	* Configuration hibernate transaction manager
+	* 
+	*
+	* 
+	* @version 1.0
+	* @since   2020-06-03
+	*/
 	
 	@Bean
 	@Autowired

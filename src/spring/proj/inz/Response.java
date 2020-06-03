@@ -7,6 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+* Entity class of Response
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Entity
 @Table(name="response")
 public class Response {

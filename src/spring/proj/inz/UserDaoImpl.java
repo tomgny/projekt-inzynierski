@@ -1,5 +1,7 @@
 package com.tognyp.springsecurity.demo.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -7,6 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tognyp.springsecurity.demo.entity.User;
+
+/**
+* DAO implementation of User entity use to store data in database
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -40,6 +51,19 @@ public class UserDaoImpl implements UserDao {
 
 		// create the user ... finally LOL
 		currentSession.saveOrUpdate(theUser);
+	}
+
+	@Override
+	public List<User> findAllUsers() {
+		
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// now retrieve/read from database using username
+		Query<User> theQuery = currentSession.createQuery("from User", User.class);
+
+		List<User> theUsers = theQuery.getResultList();
+		
+		return theUsers;
 	}
 
 }

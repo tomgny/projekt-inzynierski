@@ -20,6 +20,15 @@ import com.tognyp.springsecurity.demo.user.QuestUser;
 import com.tognyp.springsecurity.demo.entity.User;
 import com.tognyp.springsecurity.demo.service.UserService;
 
+/**
+* Controller responsible for Registration operation
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Controller
 @RequestMapping("/register")
 public class RegistrationController {
@@ -29,13 +38,29 @@ public class RegistrationController {
 	
     private Logger logger = Logger.getLogger(getClass().getName());
     
+    /**
+	* Binding user input
+	* 
+	*
+	* @version 1.0
+	* @since   2020-06-03
+	*/
+    
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
 		
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-	}	
+	}
+	
+	/**
+	* Getting view of registration form
+	* 
+	* @param theModel Model passed to view
+	* @version 1.0
+	* @since   2020-06-03
+	*/
 	
 	@GetMapping("/showRegistrationForm")
 	public String showMyLoginPage(Model theModel) {
@@ -45,6 +70,18 @@ public class RegistrationController {
 		return "registration-form";
 	}
 
+	/**
+	* Process registration form
+	*
+	* @param theModel Model passed to view
+	* @param questionnaireId Parameter received from previous view
+	* @param theQuestUser Model of class include data to user register
+	* @param theBindingResult Check is valid of binding
+	* @return If binding has errors, return to previous view with errors, otherwise return confirmation view
+	* @version 1.0
+	* @since   2020-06-03
+	*/
+	
 	@PostMapping("/processRegistrationForm")
 	public String processRegistrationForm(
 				@Valid @ModelAttribute("questUser") QuestUser theQuestUser, 

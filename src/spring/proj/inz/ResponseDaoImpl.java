@@ -10,8 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import com.tognyp.springsecurity.demo.entity.Questionnaire;
+
 import com.tognyp.springsecurity.demo.entity.Response;
+
+/**
+* DAO implementation of Role entity use to store data in database
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
 
 @Repository
 public class ResponseDaoImpl implements ResponseDao {
@@ -20,11 +29,13 @@ public class ResponseDaoImpl implements ResponseDao {
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public void save(Response response) {
+	public void save(List<Response> response) {
 		
 		Session currentSession = sessionFactory.getCurrentSession();
 		
-		currentSession.saveOrUpdate(response);
+		for(Response r : response) {
+			currentSession.saveOrUpdate(r);
+		}
 
 	}
 

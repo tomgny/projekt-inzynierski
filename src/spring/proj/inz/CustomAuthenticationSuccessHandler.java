@@ -15,12 +15,30 @@ import org.springframework.stereotype.Component;
 import com.tognyp.springsecurity.demo.entity.User;
 import com.tognyp.springsecurity.demo.service.UserService;
 
+/**
+* User authentication success handler
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     @Autowired
     private UserService userService;
 	
+    /**
+	* Loading user from database and redirecting to homepage
+	* 
+	*
+	* 
+	* @version 1.0
+	* @since   2020-06-03
+	*/
+    
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {

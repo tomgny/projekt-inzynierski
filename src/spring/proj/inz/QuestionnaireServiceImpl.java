@@ -10,12 +10,21 @@ import org.springframework.stereotype.Service;
 import com.tognyp.springsecurity.demo.dao.QuestionnaireDao;
 import com.tognyp.springsecurity.demo.entity.Questionnaire;
 
+/**
+* Questionnaire service implementation use DAO design pattern
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Service
 public class QuestionnaireServiceImpl implements QuesionnaireService {
 	
 	@Autowired
 	private QuestionnaireDao questionnaireDao;
-
+	
 	@Override
 	@Transactional
 	public List<Questionnaire> getQuestionnaires() {

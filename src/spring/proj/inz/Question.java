@@ -14,6 +14,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+* Entity class of Question
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Entity
 @Table(name="question")
 public class Question {

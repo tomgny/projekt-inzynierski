@@ -13,11 +13,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
+
+/**
+* User service implementation use DAO design pattern
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -74,5 +85,33 @@ public class UserServiceImpl implements UserService {
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+	}
+	
+	@Override
+	@Transactional
+	public List<User> findAllUsers() {
+		for(User u : userDao.findAllUsers()) {
+			System.out.println("username: " + u.getUserName() + " user role: " + u.getRoles());
+		}
+		return userDao.findAllUsers();
+	}
+	
+	@Override
+	@Transactional
+	public boolean addNewRole(String userName, String roleName) {
+		User user = userDao.findByUserName(userName);
+		Role role = roleDao.findRoleByName(roleName);
+		if(user.getRoles().contains(role)) {
+			return false;
+		}
+		Collection<Role> tmpRoles = user.getRoles();
+		tmpRoles.add(role);
+		
+		user.setRoles(tmpRoles);
+		
+		userDao.save(user);
+		
+		return true;
+		
 	}
 }

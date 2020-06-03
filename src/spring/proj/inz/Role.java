@@ -7,6 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+* Entity class of Role
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Entity
 @Table(name="role")
 public class Role {
@@ -44,6 +53,6 @@ public class Role {
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", name=" + name + "]";
+		return name;
 	}
 }

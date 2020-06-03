@@ -8,6 +8,15 @@ import org.springframework.stereotype.Repository;
 import com.tognyp.springsecurity.demo.entity.Answer;
 import com.tognyp.springsecurity.demo.entity.Question;
 
+/**
+* DAO implementation of Answer entity use to store data in database
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Repository
 public class AnswerDaoImpl implements AnswerDao{
 

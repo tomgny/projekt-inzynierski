@@ -14,6 +14,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+/**
+* Entity class of User
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Entity
 @Table(name="user")
 public class User {
@@ -63,6 +72,10 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.roles = roles;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getUserName() {

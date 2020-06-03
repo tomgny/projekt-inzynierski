@@ -13,6 +13,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.tognyp.springsecurity.demo.service.UserService;
 
+/**
+* Class include security configuration
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -23,10 +32,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 	
+	/**
+	* Configuration providing authentication
+	* 
+	*
+	* @throws Exception when authentication fail
+	* @version 1.0
+	* @since   2020-06-03
+	*/
+	
 	@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
+	
+	/**
+	* Security settings
+	* 
+	*
+	* @throws Exception when authentication fail
+	* @version 1.0
+	* @since   2020-06-03
+	*/
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -48,10 +75,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 	}
 	
+	/**
+	* Bean class of BCrypt encoder
+	* 
+	*
+	* @version 1.0
+	* @since   2020-06-03
+	*/
+	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
+	/**
+	* User authentication provider
+	* 
+	*
+	* @version 1.0
+	* @since   2020-06-03
+	*/
 	
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {

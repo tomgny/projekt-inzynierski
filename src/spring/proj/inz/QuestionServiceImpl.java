@@ -10,6 +10,15 @@ import org.springframework.stereotype.Service;
 import com.tognyp.springsecurity.demo.dao.QuestionDao;
 import com.tognyp.springsecurity.demo.entity.Question;
 
+/**
+* Question service implementation use DAO design pattern
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Service
 public class QuestionServiceImpl implements QuestionService {
 	

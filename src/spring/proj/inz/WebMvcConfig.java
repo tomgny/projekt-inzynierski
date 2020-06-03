@@ -6,16 +6,43 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
+/**
+* Component responsible for MVC additional config
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Component
 @EnableSpringDataWebSupport
 public class WebMvcConfig extends WebMvcConfigurationSupport{
 
+	/**
+	* Adding converter to configuration
+	* 
+	*
+	* 
+	* @version 1.0
+	* @since   2020-06-03
+	*/
+	
 	@Override
 	protected void addFormatters(FormatterRegistry registry) {
 		registry.addConverter(stringToQuesitonConverter());
 		super.addFormatters(registry);
 		
 	}
+	
+	/**
+	* Register converter
+	* 
+	*
+	* 
+	* @version 1.0
+	* @since   2020-06-03
+	*/
 	
 	@Bean
 	public StringToQuestionConverter stringToQuesitonConverter() {

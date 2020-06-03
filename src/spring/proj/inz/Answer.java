@@ -11,6 +11,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+* Entity class of Answer
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Entity
 @Table(name="answer")
 public class Answer {

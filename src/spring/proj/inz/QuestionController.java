@@ -17,6 +17,15 @@ import com.tognyp.springsecurity.demo.entity.Questionnaire;
 import com.tognyp.springsecurity.demo.service.QuesionnaireService;
 import com.tognyp.springsecurity.demo.service.QuestionService;
 
+/**
+* Controller responsible for Question operation
+* 
+*
+* 
+* @version 1.0
+* @since   2020-06-03
+*/
+
 @Controller
 @RequestMapping("/question")
 public class QuestionController {
@@ -27,8 +36,18 @@ public class QuestionController {
 	@Autowired
 	private QuesionnaireService questionnaireService;
 
+	/**
+	* Saving question to database
+	* 
+	*
+	* @param theQuestion Question model include necessary data
+	* @param request Http Request to get parameters from view
+	* @return Redirect to show questionnaire view
+	* @version 1.0
+	* @since   2020-06-03
+	*/
+	
 	@PostMapping("/saveQuestion")
-	//public String saveQuestion(@RequestParam("questionnaireId") Long questionnaireId, @ModelAttribute("question") Question theQuestion) {
 	public String saveQuestion(HttpServletRequest request, @ModelAttribute("question") Question theQuestion) {
 
 		String temp = request.getParameter("questionnaire");
@@ -41,6 +60,16 @@ public class QuestionController {
 		return "redirect:/questionnaires/show-questionnaire";
 	}
 	
+	/**
+	* Getting add question view
+	* 
+	*
+	* @param theModel Model passed to view
+	* @return View used to add question
+	* @version 1.0
+	* @since   2020-06-03
+	*/
+	
 	@GetMapping("/addQuestion")
 	public String addQuestion(Model theModel) {
 		
@@ -49,6 +78,17 @@ public class QuestionController {
 		
 		return "add-question";
 	}
+	
+	/**
+	* Showing questions view
+	* 
+	*
+	* @param theModel Model passed to view
+	* @param request Http Request to get parameters from view
+	* @return View used to show questions
+	* @version 1.0
+	* @since   2020-06-03
+	*/
 	
 	@GetMapping("/showQuestions")
 	public String showQuestions(HttpServletRequest request, Model theModel) {
