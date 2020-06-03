@@ -1,1 +1,1 @@
-https://github.com/tomgny/ProjInz_2020/tree/master/doc
+https://github.com/tomgny/ProjInz_2020/blob/master/doc/index.html
