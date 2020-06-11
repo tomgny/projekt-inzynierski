@@ -18,5 +18,7 @@ public interface ResponseDao {
 	public void save(List<Response> response);
 
 	public List<Response> findByUsername(String username, String questionnaireId);
+	
+	public List<Response> findByQuestionnaireId(String questionnaireId);
 
 }

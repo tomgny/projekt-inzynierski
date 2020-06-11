@@ -64,16 +64,9 @@ public class QuestionDaoImpl implements QuestionDao {
 		
 		Question theQuestion = new Question();
 		
-		System.out.println("parsing id: " + id);
-		
-		//int theId = Integer.parseInt(id);
 		Long theId = Long.parseLong(id);
 		
-		System.out.println("id parsed: " + theId);
-		
 		theQuestion = currentSession.get(Question.class, theId);
-		
-		System.out.println("getQuestionById: Question = " + theQuestion);
 		
 		return theQuestion;
 	}

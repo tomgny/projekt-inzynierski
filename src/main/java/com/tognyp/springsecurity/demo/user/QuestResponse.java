@@ -1,5 +1,6 @@
 package com.tognyp.springsecurity.demo.user;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,7 +21,7 @@ public class QuestResponse {
 	@NotNull(message="Coœ posz³o nie tak...")
 	private Long questionId;
 	
-	@NotNull(message="Proszê wype³niæ wszystkie pola odpowiedzi")
+	@NotBlank(message="Proszê wype³niæ wszystkie pola odpowiedzi")
 	private String text;
 
 	public QuestResponse() {

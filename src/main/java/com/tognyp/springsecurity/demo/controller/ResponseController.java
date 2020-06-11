@@ -3,7 +3,10 @@ package com.tognyp.springsecurity.demo.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -203,15 +206,20 @@ public class ResponseController {
 								@RequestParam(name="questionnaireId") String questionnaireId) {
 		
 		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		
 		HttpSession session = request.getSession();
 		User username = (User)session.getAttribute("user");
 		
 		String nameToSearch = username.getUserName() + passwd;
 		
-		System.out.println("nameToSearch: " + nameToSearch);
-		System.out.println("quesionnaireId: " + questionnaireId);
 		
 		List<Response> theResponses = responseService.findByUsername(nameToSearch, questionnaireId);
+		
+		if(theResponses.size() == 0) {
+			return "wrong-password";
+		}
+
 		List<Question> theQuestions = questionService.getQuestions(Integer.parseInt(questionnaireId));
 		
 		Collections.sort(theResponses, new Comparator<Response>(){
@@ -231,9 +239,85 @@ public class ResponseController {
 			
 		});
 		
+		List<Boolean> hashMatchesList = new ArrayList<>();
+		
+		for(Response r : theResponses) {
+			String verificationMatch = nameToSearch + r.getQuestionnaireId() + r.getQuestionId() + r.getText();
+			System.out.println("plain text: " + nameToSearch + r.getQuestionnaireId() + r.getQuestionId() + r.getText());
+			System.out.println("ver: " + verificationMatch);
+			System.out.println("r.getVer: " + r.getVerification());
+			System.out.println("-----");
+			if(passwordEncoder.matches(verificationMatch, r.getVerification())){
+				hashMatchesList.add(true);
+			}
+			else {
+				hashMatchesList.add(false);
+			}
+		}
+		
+		theModel.addAttribute("checkHash", hashMatchesList);
 		theModel.addAttribute("responses", theResponses);
 		theModel.addAttribute("questions", theQuestions);
 		
 		return "show-responses";
+	}
+	
+	/**
+	* Showing all responses from users
+	* 
+	*
+	* @param theModel Model passed to view
+	* @param questionnaireId Parameter received from previous view
+	* @return View include table of all users responses
+	* @version 1.0
+	* @since   2020-06-03
+	*/
+	
+	@GetMapping("/showResults")
+	public String showResults(Model theModel, @RequestParam(name="questionnaireId") String questionnaireId) {
+		
+		List<Response> tmpResponses = responseService.findByQuestionnaireId(questionnaireId);
+		/*
+		Collections.sort(tmpResponses, new Comparator<Response>(){
+
+			@Override
+			public int compare(Response o1, Response o2) {
+				o1.getQuestionId().compareTo(o2.getQuestionId());
+				o1.getText().compareTo(o2.getText());
+				return o1.getQuestionId().compareTo(o2.getQuestionId());
+			}
+		});
+		*/
+		Collections.sort(tmpResponses, Comparator.comparing(Response::getQuestionId)
+				  .thenComparing(Response::getText));
+		
+		Map<Response, Integer> theResponses = new HashMap<>();
+		
+		for(Response r : tmpResponses) {
+			System.out.println("response text " + r.getText());
+		}
+		
+		int counter = 0;
+		for(int i = 0; i < tmpResponses.size()-1; i++) {
+			String text = tmpResponses.get(i).getText();
+			counter++;
+			if(!tmpResponses.get(i+1).getText().equals(text)) {
+				System.out.println("response text: " + tmpResponses.get(i).getText() + " counter value: " + counter);
+				theResponses.put(tmpResponses.get(i), counter);
+				counter = 0;
+			}
+			if(i == tmpResponses.size()-2) {
+				counter++;
+				System.out.println("response text: " + tmpResponses.get(i+1).getText() + " counter value: " + counter);
+				theResponses.put(tmpResponses.get(i+1), counter);
+			}
+		}
+
+		List<Question> theQuestions = questionService.getQuestions(Integer.parseInt(questionnaireId));
+		
+		theModel.addAttribute("questions", theQuestions);
+		theModel.addAttribute("responses", theResponses);
+		
+		return "show-results";
 	}
 }

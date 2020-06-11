@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.tognyp.springsecurity.demo.dao.QuestionDao;
 import com.tognyp.springsecurity.demo.dao.ResponseDao;
+import com.tognyp.springsecurity.demo.entity.Question;
 import com.tognyp.springsecurity.demo.entity.Response;
 import com.tognyp.springsecurity.demo.entity.User;
 import com.tognyp.springsecurity.demo.user.QuestResponse;
@@ -29,6 +31,9 @@ public class ResponseServiceImpl implements ResponseService {
 
 	@Autowired
 	private ResponseDao responseDao;
+	
+	@Autowired
+	private QuestionDao questionDao;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -60,6 +65,41 @@ public class ResponseServiceImpl implements ResponseService {
 	public List<Response> findByUsername(String username, String questionnaireId) {
 		return responseDao.findByUsername(username, questionnaireId);
 		
+	}
+
+	@Override
+	@Transactional
+	public List<Response> findByQuestionnaireId(String questionnaireId) {
+		
+		List<Response> tmpResponses = responseDao.findByQuestionnaireId(questionnaireId);
+		
+		List<Response> toRemove = new ArrayList<>();
+		List<Response> toAdd = new ArrayList<>();
+		
+		for(Response r : tmpResponses) {
+			
+			Question tmpQuestion = questionDao.getQuestionById(r.getQuestionId().toString());
+			if(tmpQuestion.getType().equals("2")) {
+				String[] separateText = r.getText().split(",");
+				for(String s : separateText) {
+					Response tmpResp = new Response();
+					tmpResp.setId(r.getId());
+					tmpResp.setQuestionId(r.getQuestionId());
+					tmpResp.setQuestionnaireId(r.getQuestionnaireId());
+					tmpResp.setText(s);
+					tmpResp.setUser(r.getUser());
+					tmpResp.setVerification(r.getVerification());
+					toAdd.add(tmpResp);
+				}
+				toRemove.add(r);
+			}
+			
+		}
+		
+		tmpResponses.removeAll(toRemove);
+		tmpResponses.addAll(toAdd);
+		
+		return tmpResponses;
 	}
 
 }

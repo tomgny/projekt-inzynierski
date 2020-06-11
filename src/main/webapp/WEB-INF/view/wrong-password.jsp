@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Odrzucenie odpowiedzi</title>
+	<title>Brak wyników</title>
 		<link type="text/css"
 	      rel="stylesheet"
 	      href="${pageContext.request.contextPath}/resources/css/style.css">
@@ -12,7 +12,7 @@
 	<div class="main-content">
 			<div class="header">
 				<div class="title">
-					<h2>Już odpowiedziałeś na tę ankietę</h2>
+					<h2>Podałeś złe hasło lub nie odpowiedziałeś jeszcze na tę ankietę.</h2>
 				</div>
 			</div>
 			<br><br>

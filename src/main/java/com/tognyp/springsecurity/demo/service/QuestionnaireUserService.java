@@ -14,6 +14,7 @@ import com.tognyp.springsecurity.demo.entity.QuestionnaireUser;
 */
 
 public interface QuestionnaireUserService {
+	
 	void save(QuestionnaireUser questionnaireUser);
 	
 	List<QuestionnaireUser> isResponded(String userId, String questionnaireId);

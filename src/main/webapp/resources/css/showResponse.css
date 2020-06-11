@@ -1,17 +1,11 @@
-#wrapper{
-   width: 500px;
-   border: 1px solid black;
-   overflow: hidden; /* will contain if #first is longer than #second */
-   background-color: black;
-}
 #table1{
-    width: 300px;
     float: left; /* add this */
-    border: 1px solid red;
-    background-color: gold;
 }
 #table2{
-    border: 1px solid green;
     overflow: hidden; /* if you don't want #second to wrap below #first */
-    background-color: black;
+    float: center;
+}
+#table3{
+	float: right;
+    overflow: hidden; /* if you don't want #second to wrap below #first */
 }

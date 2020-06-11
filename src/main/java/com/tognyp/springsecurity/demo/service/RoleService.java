@@ -15,7 +15,7 @@ import com.tognyp.springsecurity.demo.entity.Role;
 
 public interface RoleService {
 	
-public Role findRoleByName(String theRoleName);
+	Role findRoleByName(String theRoleName);
 	
 	List<Role> findAllRoles();
 

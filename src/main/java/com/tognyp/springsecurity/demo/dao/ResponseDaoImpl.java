@@ -62,4 +62,18 @@ public class ResponseDaoImpl implements ResponseDao {
 		
 	}
 
+	@Override
+	public List<Response> findByQuestionnaireId(String questionnaireId) {
+
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Query<Response> theQuery = currentSession.createQuery("from Response where questionnaire_id=:questionnaireId", Response.class);
+		theQuery.setParameter("questionnaireId", questionnaireId);
+		
+		List<Response> theResponses = theQuery.getResultList();
+		
+		return theResponses;
+		
+	}
+
 }

@@ -20,4 +20,6 @@ public interface ResponseService {
 	void save(ResponsesViewModel responsesViewModel, User user, String passwd);
 	
 	List<Response> findByUsername(String username, String questionnaireId);
+	
+	List<Response> findByQuestionnaireId(String questionnaireId);
 }

@@ -15,9 +15,9 @@ import com.tognyp.springsecurity.demo.entity.Question;
 
 public interface QuestionService {
 	
-	public void save(Question theQuestion, Long questionnaireId);
+	void save(Question theQuestion, Long questionnaireId);
 
-	public List<Question> getQuestions(int id);
+	List<Question> getQuestions(int id);
 	
-	public Question getQuestionById(String id);
+	Question getQuestionById(String id);
 }
