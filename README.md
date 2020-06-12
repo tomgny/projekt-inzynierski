@@ -1,4 +1,4 @@
-##Projekt inżynierski
+## Projekt inżynierski
 
 Aplikacja webowa umożliwiająca tworzenie ankiet oraz głosowanie w sposób umożliwiający zachowanie anonimowości użytkowników za pomocą rozwiązań korzystających z funkcji haszującej BCrypt.
 
